@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - DEBUG=true
+      - PG_TRUST_LOCALNET=true
+      - DB_EXTENSION=uuid-ossp
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_USER=postgres
+      - POSTGRES_MULTIPLE_DATABASES=gostack_desafio06,gostack_desafio06_tests
+    volumes:
+      - /Users/feliperochaoliveira/Documents/projects/finances2/src/database:/var/lib/postgresql
