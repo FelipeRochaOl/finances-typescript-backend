@@ -2,6 +2,16 @@
 
 > Felipe Rocha Oliveira
 
+> Importante, para rodar a aplicação você precisa do docker e docker-compose instalado, execute:
+
+```bash
+docker-compose up -d
+sleep 5 && docker-compose exec -it node bash -c 'yarn typeorm migration:run && yarn start'
+```
+
+> Para rodar juntamente com o frontend, acesse o repositório:
+> [gofinance](https://github.com/FelipeRochaOl/gofinance)
+
 <img alt="GoStack" src="https://storage.googleapis.com/golden-wind/bootcamp-gostack/header-desafios-new.png" />
 
 <h3 align="center">
