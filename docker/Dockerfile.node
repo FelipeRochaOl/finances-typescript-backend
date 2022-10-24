@@ -1,0 +1,23 @@
+FROM node:16-bullseye
+
+RUN apt-get update -yqq
+
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+
+WORKDIR /home/node/app
+
+COPY package.json ./
+
+USER node
+
+COPY --chown=node:node . .
+
+RUN yarn global add typescript ts-node ts-node-dev
+
+RUN yarn install
+
+EXPOSE 3333
+
+COPY . ./
+
+CMD [ "yarn", "dev:server" ]

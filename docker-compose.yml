@@ -1,14 +1,21 @@
 version: '3.1'
 
+networks:
+  backend:
+    driver:
+      bridge
+
 services:
   postgres:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./docker/Dockerfile.postgre
     restart: always
     container_name: postgres
     ports:
       - 5432:5432
+    networks:
+      - backend
     environment:
       - DEBUG=true
       - PG_TRUST_LOCALNET=true
@@ -17,4 +24,20 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_MULTIPLE_DATABASES=gostack_desafio06,gostack_desafio06_tests
     volumes:
-      - /Users/feliperochaoliveira/Documents/projects/finances2/src/database:/var/lib/postgresql
+      - ./src/database:/var/lib/postgresql
+  
+  node:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.node
+    container_name: node
+    ports:
+      - 3333:3333
+    networks:
+      - backend
+    depends_on:
+      - postgres
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/home/node/app
